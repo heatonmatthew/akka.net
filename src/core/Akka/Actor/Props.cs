@@ -774,7 +774,7 @@ namespace Akka.Actor
 #if CLONEABLE
             var invokerCopy = (Func<TActor>)invoker.Clone();
 #else
-            // TODO: CORECLR FIX IT
+            // TODO: CORECLR FIX IT (pre NETSTANDARD2.0)
             var invokerCopy = (Func<TActor>)invoker;
 #endif
             return new DynamicProps<TActor>(initialCopy, invokerCopy);
