@@ -3,9 +3,8 @@
 
   <PropertyGroup>
     <AssemblyTitle>Akka.Persistence.Sqlite.Tests</AssemblyTitle>
-    <TargetFrameworks>net452;netcoreapp1.1;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp2.2</TargetFrameworks>
     <RuntimeIdentifier Condition=" '$(TargetFramework)' == 'net452' And '$(OS)' == 'Windows_NT'">win7-x64</RuntimeIdentifier>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
  
   <ItemGroup>
@@ -30,14 +29,6 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <DefineConstants>$(DefineConstants);SERIALIZABLE</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
-    <DefineConstants>$(DefineConstants);SERIALIZABLE</DefineConstants>
-  </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>

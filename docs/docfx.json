@@ -17,7 +17,7 @@
         "dest": "api",
         "filter": "filterConfig.yml",
         "properties": {
-            "TargetFramework": "net45"
+            "TargetFramework": "net452"
         }
     }],
     "build": {

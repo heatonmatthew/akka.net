@@ -57,12 +57,12 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net452\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="QDFeedParser, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\qdfeed.1.1.0\lib\net45\QDFeedParser.dll</HintPath>
+      <HintPath>..\..\..\packages\qdfeed.1.1.0\lib\net452\QDFeedParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

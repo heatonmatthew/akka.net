@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <AssemblyTitle>Akka.Cluster.Tests</AssemblyTitle>
-    <TargetFrameworks>net452;netcoreapp1.1;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,15 +26,11 @@
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <DefineConstants>$(DefineConstants);SERIALIZABLE;FSCHECK;</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>$(DefineConstants);CORECLR</DefineConstants>
+    <DefineConstants>$(DefineConstants);FSCHECK;</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.2' ">
-    <DefineConstants>$(DefineConstants);CORECLR;SERIALIZABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);CORECLR</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

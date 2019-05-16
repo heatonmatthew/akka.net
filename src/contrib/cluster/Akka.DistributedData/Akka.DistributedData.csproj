@@ -5,10 +5,9 @@
     <AssemblyTitle>Akka.DistributedData</AssemblyTitle>
     <Description>Replicated data using CRDT structures</Description>
     <VersionSuffix>beta</VersionSuffix>
-    <TargetFrameworks>net452;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <PackageTags>$(AkkaPackageTags);network;cluster;crdt;replication</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,16 +19,8 @@
     <PackageReference Include="Hyperion" Version="$(HyperionVersion)" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <DefineConstants>$(DefineConstants);SERIALIZATION;CLONABLE</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>$(DefineConstants);CORECLR</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <DefineConstants>$(DefineConstants);CORECLR;SERIALIZATION;CLONABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);CORECLR</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

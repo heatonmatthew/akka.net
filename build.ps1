@@ -120,7 +120,7 @@ if (!(Test-Path $FakeExePath)) {
 ###########################################################################
 
 # Make sure NBench Runner has been installed.
-$NBenchDllPath = Join-Path $ToolPath "NBench.Runner/lib/net45/NBench.Runner.exe"
+$NBenchDllPath = Join-Path $ToolPath "NBench.Runner/lib/net452/NBench.Runner.exe"
 if (!(Test-Path $NBenchDllPath)) {
     Write-Host "Installing NBench..."
     Invoke-Expression "&`"$NugetPath`" install NBench.Runner -ExcludeVersion -Version $NBenchVersion -OutputDirectory `"$ToolPath`"" | Out-Null;

@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Helios, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Helios.2.1.2\lib\net45\Helios.dll</HintPath>
+      <HintPath>..\..\..\packages\Helios.2.1.2\lib\net452\Helios.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
