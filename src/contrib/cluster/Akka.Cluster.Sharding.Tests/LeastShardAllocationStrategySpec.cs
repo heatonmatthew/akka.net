@@ -62,14 +62,14 @@ namespace Akka.Cluster.Sharding.Tests
 
             allocations = allocations.SetItem(_regionB, new[] { "shard2", "shard3", "shard4" }.ToImmutableList());
             var r2 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet<string>.Empty).Result;
-            r2.Should().BeEquivalentTo(new[] { "shard2", "shard3" });
+            r2.SequenceEqual(new[] { "shard2", "shard3" }).Should().BeTrue();
 
             var r3 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard4")).Result;
             r3.Count.Should().Be(0);
 
             allocations = allocations.SetItem(_regionA, new[] { "shard1", "shard5", "shard6" }.ToImmutableList());
             var r4 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard1")).Result;
-            r4.Should().BeEquivalentTo(new[] { "shard2" });
+            r4.SequenceEqual(new[] { "shard2" }).Should().BeTrue();
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Akka.Cluster.Sharding.Tests
             }.ToImmutableDictionary();
 
             var r1 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet<string>.Empty).Result;
-            r1.Should().BeEquivalentTo(new[] { "shard2", "shard3" });
+            r1.SequenceEqual(new[] { "shard2", "shard3" }).Should().BeTrue();
 
             var r2 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard2", "shard3")).Result;
             r2.Count.Should().Be(0);
@@ -100,7 +100,7 @@ namespace Akka.Cluster.Sharding.Tests
             }.ToImmutableDictionary();
 
             var r1 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard2")).Result;
-            r1.Should().BeEquivalentTo(new[] { "shard3" });
+            r1.SequenceEqual(new[] { "shard3" }).Should().BeTrue();
 
             var r2 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard2", "shard3")).Result;
             r2.Count.Should().Be(0);
@@ -117,7 +117,7 @@ namespace Akka.Cluster.Sharding.Tests
             }.ToImmutableDictionary();
 
             var r1 = allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard2")).Result;
-            r1.Should().BeEquivalentTo(new[] { "shard1", "shard3", "shard4" });
+            r1.SequenceEqual(new[] { "shard1", "shard3", "shard4" }).Should().BeTrue();
 
             var r2 = _allocationStrategy.Rebalance(allocations, ImmutableHashSet.Create("shard5", "shard6", "shard7", "shard8")).Result;
             r2.Count.Should().Be(0);

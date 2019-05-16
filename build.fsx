@@ -203,7 +203,7 @@ Target "MultiNodeTests" (fun _ ->
 
 Target "MultiNodeTestsNetCore" (fun _ ->
     ActivateFinalTarget "KillCreatedProcesses"
-    let multiNodeTestPath = findToolInSubPath "Akka.MultiNodeTestRunner.dll" (currentDirectory @@ "src" @@ "core" @@ "Akka.MultiNodeTestRunner" @@ "bin" @@ "Release" @@ "netcoreapp2.2" @@ "win7-x64" @@ "publish")
+    let multiNodeTestPath = findToolInSubPath "Akka.MultiNodeTestRunner.dll" (currentDirectory @@ "src" @@ "core" @@ "Akka.MultiNodeTestRunner" @@ "bin" @@ "Release" @@ "netcoreapp2.2")
 
     let multiNodeTestAssemblies = 
         match getBuildParamOrDefault "incremental" "" with

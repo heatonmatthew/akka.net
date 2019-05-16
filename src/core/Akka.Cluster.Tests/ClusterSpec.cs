@@ -16,6 +16,7 @@ using Akka.TestKit;
 using Akka.Util.Internal;
 using Xunit;
 using FluentAssertions;
+using FluentAssertions.Extensions;
 using Xunit.Abstractions;
 
 namespace Akka.Cluster.Tests
@@ -191,7 +192,7 @@ namespace Akka.Cluster.Tests
             probe.ExpectMsg<ClusterEvent.MemberLeft>();
             // MemberExited might not be published before MemberRemoved
             var removed = (ClusterEvent.MemberRemoved)probe.FishForMessage(m => m is ClusterEvent.MemberRemoved);
-            removed.PreviousStatus.ShouldBeEquivalentTo(MemberStatus.Exiting);
+            removed.PreviousStatus.Should().BeEquivalentTo(MemberStatus.Exiting);
 
             AwaitCondition(() => leaveTask.IsCompleted);
 
@@ -498,7 +499,7 @@ namespace Akka.Cluster.Tests
                 probe.ExpectMsg<ClusterEvent.MemberLeft>();
                 // MemberExited might not be published before MemberRemoved
                 var removed = (ClusterEvent.MemberRemoved)probe.FishForMessage(m => m is ClusterEvent.MemberRemoved);
-                removed.PreviousStatus.ShouldBeEquivalentTo(MemberStatus.Exiting);
+                removed.PreviousStatus.Should().BeEquivalentTo(MemberStatus.Exiting);
             }
             finally
             {
@@ -531,7 +532,7 @@ namespace Akka.Cluster.Tests
                 probe.ExpectMsg<ClusterEvent.MemberLeft>();
                 // MemberExited might not be published before MemberRemoved
                 var removed = (ClusterEvent.MemberRemoved)probe.FishForMessage(m => m is ClusterEvent.MemberRemoved);
-                removed.PreviousStatus.ShouldBeEquivalentTo(MemberStatus.Exiting);
+                removed.PreviousStatus.Should().BeEquivalentTo(MemberStatus.Exiting);
             }
             finally
             {
@@ -561,7 +562,7 @@ namespace Akka.Cluster.Tests
                 probe.ExpectMsg<ClusterEvent.MemberLeft>();
                 // MemberExited might not be published before MemberRemoved
                 var removed = (ClusterEvent.MemberRemoved)probe.FishForMessage(m => m is ClusterEvent.MemberRemoved);
-                removed.PreviousStatus.ShouldBeEquivalentTo(MemberStatus.Exiting);
+                removed.PreviousStatus.Should().BeEquivalentTo(MemberStatus.Exiting);
                 AwaitCondition(() => sys2.WhenTerminated.IsCompleted, TimeSpan.FromSeconds(10));
                 Cluster.Get(sys2).IsTerminated.Should().BeTrue();
                 CoordinatedShutdown.Get(sys2).ShutdownReason.Should().BeOfType<CoordinatedShutdown.ClusterLeavingReason>();

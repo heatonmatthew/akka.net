@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using Akka.Actor;
 using Akka.Configuration;
 using Akka.Remote.Configuration;
@@ -45,7 +46,7 @@ namespace Akka.Remote.Tests.Serialization
             var message = new ActorSelectionMessage("hello", elements.ToArray());
             var actual = AssertAndReturn(message);
             actual.Message.Should().Be(message.Message);
-            actual.Elements.Should().BeEquivalentTo(elements);
+            actual.Elements.SequenceEqual(elements).Should().BeTrue();
         }
 
         private T AssertAndReturn<T>(T message)

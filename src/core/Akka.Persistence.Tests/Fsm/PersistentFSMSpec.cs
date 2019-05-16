@@ -11,6 +11,7 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using Akka.Configuration;
+using FluentAssertions.Extensions;
 using Xunit;
 using static Akka.Actor.FSMBase;
 

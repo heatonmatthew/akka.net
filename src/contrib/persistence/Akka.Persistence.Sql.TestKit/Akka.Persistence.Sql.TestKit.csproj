@@ -13,7 +13,7 @@
     <ProjectReference Include="..\Akka.Persistence.Query.Sql\Akka.Persistence.Query.Sql.csproj" />
     <ProjectReference Include="..\..\..\core\Akka.Persistence.TCK\Akka.Persistence.TCK.csproj" />
     <ProjectReference Include="..\..\..\core\Akka.Streams.TestKit\Akka.Streams.TestKit.csproj" />
-    <PackageReference Include="FluentAssertions" Version="4.14.0" />
+    <PackageReference Include="FluentAssertions" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>

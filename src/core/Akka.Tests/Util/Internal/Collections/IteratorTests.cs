@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Linq;
 using Akka.Util.Internal.Collections;
 using FluentAssertions;
 using Xunit;
@@ -45,7 +46,7 @@ namespace Akka.Tests.Util.Internal.Collections
 
 
             var vector = iter.ToVector();
-            vector.ShouldBeEquivalentTo(new[] { 8, 5, 23 });
+            vector.SequenceEqual(new[] { 8, 5, 23 }).Should().BeTrue();
         }
     }
 }

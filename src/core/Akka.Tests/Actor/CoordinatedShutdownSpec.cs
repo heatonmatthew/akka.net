@@ -242,7 +242,7 @@ namespace Akka.Tests.Actor
 
             co.Run(customReason, "b").Wait(RemainingOrDefault);
             ReceiveN(2).Should().Equal(new object[] { "B", "C" });
-            co.ShutdownReason.ShouldBeEquivalentTo(customReason);
+            co.ShutdownReason.Should().BeEquivalentTo(customReason);
         }
 
         [Fact]
@@ -262,12 +262,12 @@ namespace Akka.Tests.Actor
 
             co.ShutdownReason.Should().BeNull();
             co.Run(customReason).Wait(RemainingOrDefault);
-            co.ShutdownReason.ShouldBeEquivalentTo(customReason);
+            co.ShutdownReason.Should().BeEquivalentTo(customReason);
             ExpectMsg("A");
             co.Run(CoordinatedShutdown.UnknownReason.Instance).Wait(RemainingOrDefault);
             TestActor.Tell("done");
             ExpectMsg("done"); // no additional A
-            co.ShutdownReason.ShouldBeEquivalentTo(customReason);
+            co.ShutdownReason.Should().BeEquivalentTo(customReason);
         }
 
         [Fact]
@@ -409,7 +409,7 @@ namespace Akka.Tests.Actor
             shutdownSystem.Wait(TimeSpan.FromSeconds(10)).Should().BeTrue();
 
             Sys.WhenTerminated.IsCompleted.Should().BeTrue();
-            CoordinatedShutdown.Get(Sys).ShutdownReason.ShouldBeEquivalentTo(customReason);
+            CoordinatedShutdown.Get(Sys).ShutdownReason.Should().BeEquivalentTo(customReason);
         }
     }
 }

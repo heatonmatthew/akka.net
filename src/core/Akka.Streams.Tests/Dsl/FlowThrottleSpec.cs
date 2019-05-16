@@ -183,14 +183,16 @@ namespace Akka.Streams.Tests.Dsl
                         .Throttle(2, TimeSpan.FromMilliseconds(750), 0, ThrottleMode.Shaping)
                         .RunWith(this.SinkProbe<int>(), Materializer);
                 probe.Request(5);
-                var result = probe.ReceiveWhile(TimeSpan.FromMilliseconds(900), filter: x => x);
+                var result = probe.ReceiveWhile(TimeSpan.FromMilliseconds(900), filter: x => x).ToArray();
                 probe.ExpectNoMsg(TimeSpan.FromMilliseconds(150))
                     .ExpectNext(3)
                     .ExpectNoMsg(TimeSpan.FromMilliseconds(150))
                     .ExpectNext(4);
                 probe.Cancel();
                 // assertion may take longer then the throttle and therefore the next assertion fails
-                result.ShouldAllBeEquivalentTo(new[] { new OnNext(1), new OnNext(2) });
+                result.Cast<TestSubscriber.OnNext<int>>()
+                    .Select(n => n.Element)
+                    .SequenceEqual(new[] { 1, 2 }).Should().BeTrue();
             }, Materializer);
         }
 
@@ -226,13 +228,13 @@ namespace Akka.Streams.Tests.Dsl
                     expected.Add(new OnNext(i));
                 }
                 downstream.ReceiveWhile(TimeSpan.FromMilliseconds(300), filter: x => x, msgs: 5)
-                    .ShouldAllBeEquivalentTo(expected);
+                    .Should().BeEquivalentTo(expected);
                 
                 downstream.Cancel();
 
                 exhaustElements.Cast<TestSubscriber.OnNext<int>>()
                     .Select(n => n.Element)
-                    .ShouldAllBeEquivalentTo(Enumerable.Range(1, 5));
+                    .Should().BeEquivalentTo(Enumerable.Range(1, 5));
             }, Materializer);
         }
 
@@ -268,13 +270,13 @@ namespace Akka.Streams.Tests.Dsl
                         expected.Add(new OnNext(i));
                 }
                 downstream.ReceiveWhile(TimeSpan.FromMilliseconds(100), filter: x => x, msgs: 2)
-                    .ShouldAllBeEquivalentTo(expected);
+                    .Should().BeEquivalentTo(expected);
 
                 downstream.Cancel();
                 exhaustElements
                     .Cast<TestSubscriber.OnNext<int>>()
                     .Select(n => n.Element)
-                    .ShouldAllBeEquivalentTo(Enumerable.Range(1, 5));
+                    .Should().BeEquivalentTo(Enumerable.Range(1, 5));
             }, Materializer);
         }
 
@@ -288,13 +290,13 @@ namespace Akka.Streams.Tests.Dsl
                         .Throttle(1, TimeSpan.FromMilliseconds(200), 5, ThrottleMode.Enforcing)
                         .RunWith(Sink.Seq<int>(), Materializer); // Burst is 5 so this will not fail
                 t1.Wait(TimeSpan.FromSeconds(3)).Should().BeTrue();
-                t1.Result.ShouldAllBeEquivalentTo(Enumerable.Range(1, 5));
+                t1.Result.Should().BeEquivalentTo(Enumerable.Range(1, 5));
 
                 var t2 =
                     Source.From(Enumerable.Range(1, 6))
                         .Throttle(1, TimeSpan.FromMilliseconds(200), 5, ThrottleMode.Enforcing)
                         .RunWith(Sink.Ignore<int>(), Materializer);
-                t2.Invoking(task => task.Wait(TimeSpan.FromSeconds(2))).ShouldThrow<OverflowException>();
+                t2.Invoking(task => task.Wait(TimeSpan.FromSeconds(2))).Should().Throw<OverflowException>();
             }, Materializer);
         }
 
@@ -406,7 +408,9 @@ namespace Akka.Streams.Tests.Dsl
                     .ExpectNext(4);
                 probe.Cancel();
                 // assertion may take longer then the throttle and therefore the next assertion fails
-                result.ShouldAllBeEquivalentTo(new[] { new OnNext(1), new OnNext(2) });
+                result.Cast<TestSubscriber.OnNext<int>>()
+                    .Select(n => n.Element)
+                    .SequenceEqual(new[] { 1, 2 }).Should().BeTrue();
             }, Materializer);
         }
 
@@ -442,13 +446,13 @@ namespace Akka.Streams.Tests.Dsl
                     expected.Add(new OnNext(i));
                 }
                 downstream.ReceiveWhile(TimeSpan.FromMilliseconds(300), filter: x => x, msgs: 5)
-                    .ShouldAllBeEquivalentTo(expected);
+                    .Should().BeEquivalentTo(expected);
 
                 downstream.Cancel();
                 exhaustElemens
                     .Cast<TestSubscriber.OnNext<int>>()
                     .Select(n => n.Element)
-                    .ShouldAllBeEquivalentTo(Enumerable.Range(1, 5));
+                    .Should().BeEquivalentTo(Enumerable.Range(1, 5));
             }, Materializer);
         }
 
@@ -485,13 +489,13 @@ namespace Akka.Streams.Tests.Dsl
                         expected.Add(new OnNext(i));
                 }
                 downstream.ReceiveWhile(TimeSpan.FromMilliseconds(200), filter: x => x, msgs: 2)
-                    .ShouldAllBeEquivalentTo(expected);
+                    .Should().BeEquivalentTo(expected);
 
                 downstream.Cancel();
                 exhaustElements
                     .Cast<TestSubscriber.OnNext<int>>()
                     .Select(n => n.Element)
-                    .ShouldAllBeEquivalentTo(Enumerable.Range(1, 5));
+                    .Should().BeEquivalentTo(Enumerable.Range(1, 5));
             }, Materializer);
         }
 
@@ -505,13 +509,13 @@ namespace Akka.Streams.Tests.Dsl
                         .Throttle(2, TimeSpan.FromMilliseconds(200), 10, x => x, ThrottleMode.Enforcing)
                         .RunWith(Sink.Seq<int>(), Materializer);
                 t1.Wait(TimeSpan.FromSeconds(3)).Should().BeTrue();
-                t1.Result.ShouldAllBeEquivalentTo(Enumerable.Range(1, 4)); // Burst is 10 so this will not fail
+                t1.Result.Should().BeEquivalentTo(Enumerable.Range(1, 4)); // Burst is 10 so this will not fail
 
                 var t2 =
                     Source.From(Enumerable.Range(1, 6))
                         .Throttle(2, TimeSpan.FromMilliseconds(200), 5, x => x, ThrottleMode.Enforcing)
                         .RunWith(Sink.Ignore<int>(), Materializer);
-                t2.Invoking(task => task.Wait(TimeSpan.FromSeconds(2))).ShouldThrow<OverflowException>();
+                t2.Invoking(task => task.Wait(TimeSpan.FromSeconds(2))).Should().Throw<OverflowException>();
             }, Materializer);
         }
 

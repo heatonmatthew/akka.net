@@ -657,7 +657,7 @@ var result =
         .RunWith(Sink.Seq<IMessage>(), materializer);
 
 result.Wait(TimeSpan.FromSeconds(1)).Should().BeTrue();
-result.Result.ShouldAllBeEquivalentTo(Enumerable.Range(0, 10));
+result.Result.Should().BeEquivalentTo(Enumerable.Range(0, 10));
 ```
 
 This example demonstrates how `BidiFlow` subgraphs can be hooked together and also turned around with the ``.Reversed`` method. The test simulates both parties of a network communication protocol without actually having to open a network connection—the flows can just be connected directly.

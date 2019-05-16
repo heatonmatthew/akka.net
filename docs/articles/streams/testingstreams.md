@@ -45,7 +45,7 @@ var sourceUnderTest = Source.Repeat(1).Select(x => x*2);
 
 var task = sourceUnderTest.Grouped(10).RunWith(Sink.First<IEnumerable<int>>(), materializer);
 task.Wait(TimeSpan.FromMilliseconds(500)).Should().BeTrue();
-task.Result.ShouldAllBeEquivalentTo(Enumerable.Repeat(2, 10));
+task.Result.Should().BeEquivalentTo(Enumerable.Repeat(2, 10));
 ```
 
 When testing a flow we need to attach a source and a sink. As both stream ends
@@ -64,7 +64,7 @@ var task = Source.From(Enumerable.Range(1, 10))
     }), materializer);
 
 task.Wait(TimeSpan.FromMilliseconds(500)).Should().BeTrue();
-task.Result.ShouldAllBeEquivalentTo(Enumerable.Range(1, 4));
+task.Result.Should().BeEquivalentTo(Enumerable.Range(1, 4));
 ```
 
 ## TestKit

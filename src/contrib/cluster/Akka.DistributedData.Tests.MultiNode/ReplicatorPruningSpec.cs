@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using Akka.Actor;
 using Akka.Cluster;
 using Akka.Cluster.TestKit;
@@ -94,7 +95,7 @@ namespace Akka.DistributedData.Tests.MultiNode
 
             _replicator.Tell(Dsl.Get(KeyB, ReadLocal.Instance));
             var oldSet = ExpectMsg<GetSuccess>().Get(KeyB);
-            oldSet.Elements.Should().BeEquivalentTo(new[] { "c", "b", "a" });
+            oldSet.Elements.SequenceEqual(new[] { "c", "b", "a" }).Should().BeTrue();
 
             _replicator.Tell(Dsl.Get(KeyC, ReadLocal.Instance));
             var oldMap = ExpectMsg<GetSuccess>().Get(KeyC);
@@ -135,7 +136,7 @@ namespace Akka.DistributedData.Tests.MultiNode
                     {
                         _replicator.Tell(Dsl.Get(KeyB, ReadLocal.Instance));
                         var set = ExpectMsg<GetSuccess>(msg => Equals(msg.Key, KeyB)).Get(KeyB);
-                        set.Elements.Should().BeEquivalentTo(new[] { "c", "b", "a" });
+                        set.Elements.SequenceEqual(new[] { "c", "b", "a" }).Should().BeTrue();
                         set.NeedPruningFrom(thirdUniqueAddress).Should().BeFalse($"{set} shouldn't need pruning from {thirdUniqueAddress}");
                     });
                 });

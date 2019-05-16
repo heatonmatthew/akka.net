@@ -7,6 +7,7 @@
 
 
 using System;
+using System.Linq;
 using Akka.Streams.Dsl;
 using Akka.Streams.TestKit;
 using Akka.Streams.TestKit.Tests;
@@ -36,7 +37,7 @@ namespace Akka.Streams.Tests.Dsl
 
             var sink = Sink.Seq<int>();
 
-            source1.OrElse(source2).RunWith(sink, Materializer).AwaitResult().ShouldAllBeEquivalentTo(new[] {1, 2, 3});
+            source1.OrElse(source2).RunWith(sink, Materializer).AwaitResult().SequenceEqual(new[] {1, 2, 3}).Should().BeTrue();
         }
 
         [Fact]
@@ -47,7 +48,7 @@ namespace Akka.Streams.Tests.Dsl
 
             var sink = Sink.Seq<int>();
 
-            source1.OrElse(source2).RunWith(sink, Materializer).AwaitResult().ShouldAllBeEquivalentTo(new[] { 4, 5, 6 });
+            source1.OrElse(source2).RunWith(sink, Materializer).AwaitResult().SequenceEqual(new[] { 4, 5, 6 }).Should().BeTrue();
         }
 
         [Fact]
